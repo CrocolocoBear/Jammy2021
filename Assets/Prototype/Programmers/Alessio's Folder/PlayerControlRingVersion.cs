@@ -22,6 +22,7 @@ public class PlayerControlRingVersion : MonoBehaviour
     float throwingSpeed = 20;
     SphereCollider triggerSphereRef;
     public GameObject charRing;
+    Animator walkAnimator;
 
     private void Awake()
     {
@@ -33,6 +34,7 @@ public class PlayerControlRingVersion : MonoBehaviour
         ringRb = ring.GetComponent<Rigidbody>();
         triggerSphereRef = GetComponent<SphereCollider>();
         ring.SetActive(false);
+        walkAnimator = GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -94,6 +96,17 @@ public class PlayerControlRingVersion : MonoBehaviour
             normalVelocityX = Input.GetAxis("Horizontal") * transform.right;
             normalVelocityZ = Input.GetAxis("Vertical") * transform.forward;
             speed = 5;
+            if (!walkAnimator.GetBool("walkCheck"))
+            {
+                walkAnimator.SetBool("walkCheck", true);
+            }
+        }
+        else
+        {
+            if (walkAnimator.GetBool("walkCheck"))
+            {
+                walkAnimator.SetBool("walkCheck", false);
+            }
         }
         if (Input.GetAxis("Mouse X") != 0)
         {
@@ -138,7 +151,7 @@ public class PlayerControlRingVersion : MonoBehaviour
         }
         ringCasePos = ring.transform.parent.position;
         //ringRb.useGravity = false;
-        ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z) * throwingSpeed * Time.deltaTime;
+        ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z).normalized * throwingSpeed * Time.deltaTime;
     }
     private void Camera()
     {
