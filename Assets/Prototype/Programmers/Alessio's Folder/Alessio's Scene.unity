@@ -785,7 +785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endPoint: {fileID: 1936186389}
-  segmentLength: 100
+  segmentLength: 10
 --- !u!120 &836158683
 LineRenderer:
   m_ObjectHideFlags: 0

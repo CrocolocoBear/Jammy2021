@@ -72,7 +72,7 @@ public class Rope : MonoBehaviour
             RopeSegment secondSeg = this.ropeSegments[i + 1];
 
             float dist = (firstSeg.posNow - secondSeg.posNow).magnitude;
-            float error = dist - ropeSegLen;//Mathf.Abs(dist - this.ropeSegLen);
+            float error = Mathf.Abs(dist - this.ropeSegLen);
             Vector3 changeDir = Vector3.zero;
 
             if (dist > ropeSegLen)
