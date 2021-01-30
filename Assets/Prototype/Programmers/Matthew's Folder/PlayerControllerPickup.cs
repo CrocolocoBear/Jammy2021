@@ -23,9 +23,7 @@ public class PlayerControllerPickup : MonoBehaviour
     SphereCollider triggerSphereRef;
     public GameObject charRing;
 
-    public GameObject[] keys;
-
-    int keysCollected = 0;
+    
 
     private void Awake()
     {
@@ -36,12 +34,6 @@ public class PlayerControllerPickup : MonoBehaviour
         ringRb = ring.GetComponent<Rigidbody>();
         triggerSphereRef = GetComponent<SphereCollider>();
         ring.SetActive(false);
-
-        keys = GameObject.FindGameObjectsWithTag("KeyBack");
-        for(int i = 0; i < keys.Length; i++)
-        {
-            keys[i].SetActive(false);
-        }
     }
 
     private void Start()
@@ -175,19 +167,7 @@ public class PlayerControllerPickup : MonoBehaviour
         }
     }
 
-    public void KeyPickup(string name)
-    {
-        for (int i = 0; i < keys.Length; i++)
-        {
-            if (keys[i].name == name)
-            {
-                keys[i].SetActive(true);
-            }
-        }
-
-        keysCollected++;
-        Debug.Log(keysCollected);
-    }
+    
 
     IEnumerable throwingCoutdown()
     {
