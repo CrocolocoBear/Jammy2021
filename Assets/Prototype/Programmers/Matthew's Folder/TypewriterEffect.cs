@@ -8,6 +8,7 @@ public class TypewriterEffect : MonoBehaviour
 
     Text dialogue;
     string text;
+    GameObject background;
     float delay = 0.03f;
 
     string[] script = {"“Hey give that back” *Playful Noises* , Ah the old days back when " +
@@ -22,10 +23,17 @@ public class TypewriterEffect : MonoBehaviour
                         "Time spent with her felt like a lifetime and was always her escape from " +
                         "the world. Her laptop wallpaper always had her smiling right back at her " +
                         "whenever she needed her most."};
+
+    AudioSource audioController;
+
+    public AudioClip[] voices;
     // Start is called before the first frame update
     void Awake()
     {
         dialogue = GetComponent<Text>();
+        background = GameObject.FindWithTag("DBack");
+        background.SetActive(false);
+        audioController = gameObject.GetComponent<AudioSource>();
     }
 
     IEnumerator ShowText()
@@ -39,6 +47,7 @@ public class TypewriterEffect : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
 
         ClearText();
+        background.SetActive(false);
     }
 
     public void PickText(string name)
@@ -47,12 +56,15 @@ public class TypewriterEffect : MonoBehaviour
         {
             case "KeyOne":
                 text = script[0];
+                audioController.clip = voices[0];
                 break;
             case "KeyTwo":
                 text = script[1];
+                audioController.clip = voices[1];
                 break;
             case "KeyThree":
                 text = script[2];
+                audioController.clip = voices[2];
                 break;
         }
     }
@@ -64,6 +76,8 @@ public class TypewriterEffect : MonoBehaviour
 
     public void StartText()
     {
+        background.SetActive(true);
         StartCoroutine("ShowText");
+        audioController.Play();
     }
 }

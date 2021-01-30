@@ -7,6 +7,9 @@ TagManager:
   - KeyBack
   - KeyWorld
   - RingThrow
+  - Anchor1
+  - Dialogue
+  - DBack
   layers:
   - Default
   - TransparentFX
