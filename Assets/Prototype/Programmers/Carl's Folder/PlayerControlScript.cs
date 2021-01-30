@@ -41,18 +41,14 @@ public class PlayerControlScript : MonoBehaviour
         if (throwing && ringThrown == false)
         {
             Throw();
-            ringThrown = true;
         }
         if (ringThrown && retrieving)
         {
             Retrieve();
-            grabbing = true;
-            retrieving = false;
         }
         if (ringThrown && grabbing)
         {
             GrabRing();
-            
         }
 
         /*
@@ -91,6 +87,7 @@ public class PlayerControlScript : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
+            grabbing = false;
             throwing = true;
         }
         if (Input.GetMouseButtonDown(1))
@@ -114,12 +111,14 @@ public class PlayerControlScript : MonoBehaviour
         ringRb.useGravity = true;
         ringRb.velocity += cam.transform.forward.normalized * throwingSpeed;
         throwing = false;
+        ringThrown = true;
     }
     private void Retrieve()
     {
         ringRb.useGravity = false;
         ringRb.velocity += new Vector3(cam.transform.position.x - ring.transform.position.x, cam.transform.position.y - ring.transform.position.y, cam.transform.position.z - ring.transform.position.z).normalized*throwingSpeed;
-        //ring.transform.localPosition += new Vector3(0, 0, throwingSpeed) * Time.deltaTime;
+        grabbing = true;
+        retrieving = false;
 
     }
     private void Camera()
@@ -133,9 +132,9 @@ public class PlayerControlScript : MonoBehaviour
         if (Vector3.Distance(ring.transform.position, cam.transform.position + (cam.transform.forward * ringOGPos.z) + (cam.transform.up * ringOGPos.y)) <= 0.5)
         {
             ring.transform.position = cam.transform.position + (cam.transform.forward * ringOGPos.z) + (cam.transform.up * ringOGPos.y);
-            throwingSpeed *= -1;
             ringRb.isKinematic = true;
             throwing = false;
+            ringThrown = false;
         }
     }
 }
