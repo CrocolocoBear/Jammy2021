@@ -8,6 +8,10 @@ public class KeyPickup : MonoBehaviour
 
     int keysCollected = 0;
 
+    public int GetKeys()
+    {
+        return keysCollected;
+    }
     void Awake()
     {
         keys = GameObject.FindGameObjectsWithTag("KeyBack");
