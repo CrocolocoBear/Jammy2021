@@ -25,6 +25,7 @@ public class PlayerControlRingVersion : MonoBehaviour
 
     private void Awake()
     {
+        Application.targetFrameRate = 60;
         rb = this.GetComponent<Rigidbody>();
         cam = this.GetComponentInChildren<Camera>();
         ringCasePos = ring.transform.parent.position;
