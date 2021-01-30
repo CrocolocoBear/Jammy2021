@@ -9,7 +9,8 @@ public class TypewriterEffect : MonoBehaviour
     Text dialogue;
     string text;
     GameObject background;
-    float delay = 0.03f;
+    float textDelay = 0.03f;
+    float soundLength;
 
     string[] script = {"“Hey give that back” *Playful Noises* , Ah the old days back when " +
                         "school was easy and losing a diary was the most of her worries. " +
@@ -27,7 +28,7 @@ public class TypewriterEffect : MonoBehaviour
     AudioSource audioController;
 
     public AudioClip[] voices;
-    // Start is called before the first frame update
+
     void Awake()
     {
         dialogue = GetComponent<Text>();
@@ -41,10 +42,10 @@ public class TypewriterEffect : MonoBehaviour
         foreach(char c in text)
         {
             dialogue.text += c;
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(textDelay);
         }
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(soundLength);
 
         ClearText();
         background.SetActive(false);
@@ -57,14 +58,17 @@ public class TypewriterEffect : MonoBehaviour
             case "KeyOne":
                 text = script[0];
                 audioController.clip = voices[0];
+                soundLength = 5.5f;
                 break;
             case "KeyTwo":
                 text = script[1];
                 audioController.clip = voices[1];
+                soundLength = 6.0f;
                 break;
             case "KeyThree":
                 text = script[2];
                 audioController.clip = voices[2];
+                soundLength = 1.0f;
                 break;
         }
     }
