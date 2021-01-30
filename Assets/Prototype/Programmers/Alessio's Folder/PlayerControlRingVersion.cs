@@ -17,15 +17,21 @@ public class PlayerControlRingVersion : MonoBehaviour
     bool ringThrown = false;
     bool retrieving = false;
     bool grabbing = false;
+    Vector3 ringCasePos;
     Vector3 ringOGPos;
-    float throwingSpeed = 10;
+    float throwingSpeed = 20;
+    SphereCollider triggerSphereRef;
+    public GameObject charRing;
 
     private void Awake()
     {
         rb = this.GetComponent<Rigidbody>();
         cam = this.GetComponentInChildren<Camera>();
-        ringOGPos = ring.transform.parent.position;
+        ringCasePos = ring.transform.parent.position;
+        ringOGPos = ring.transform.localPosition;
         ringRb = ring.GetComponent<Rigidbody>();
+        triggerSphereRef = GetComponent<SphereCollider>();
+        ring.SetActive(false);
     }
 
     private void Start()
@@ -38,21 +44,21 @@ public class PlayerControlRingVersion : MonoBehaviour
         PlayerInput();
         Camera();
 
-        if (throwing && ringThrown == false)
+        //if (throwing && ringThrown == false)
+        //{
+        //    Throw();
+        //    ringThrown = true;
+        //}
+        if (throwing)
         {
             Throw();
-            ringThrown = true;
+            //ringThrown = true;
         }
         if (ringThrown && retrieving)
         {
-            Retrieve();
+            //Retrieve();
             grabbing = true;
-            retrieving = false;
-        }
-        if (ringThrown && grabbing)
-        {
-            GrabRing();
-
+            //retrieving = false;
         }
 
         /*
@@ -95,7 +101,8 @@ public class PlayerControlRingVersion : MonoBehaviour
         }
         if (Input.GetMouseButton(1))
         {
-            retrieving = true;
+            //retrieving = true;
+            Retrieve();
         }
 
         desiredVelocity = (normalVelocityX + normalVelocityZ) * speed;
@@ -110,16 +117,23 @@ public class PlayerControlRingVersion : MonoBehaviour
 
     private void Throw()
     {
+        charRing.SetActive(false);
+        ring.SetActive(true);
         ringRb.isKinematic = false;
-        ringRb.useGravity = true;
+        //ringRb.useGravity = true;
         ringRb.velocity += cam.transform.forward.normalized * throwingSpeed;
         throwing = false;
+        //StartCoroutine("throwingCoutdown");
     }
     private void Retrieve()
     {
-        ringOGPos = ring.transform.parent.position;
-        ringRb.useGravity = false;
-        ringRb.velocity += new Vector3(ringOGPos.x - ring.transform.position.x, ringOGPos.y - ring.transform.position.y, ringOGPos.z - ring.transform.position.z).normalized * throwingSpeed * Time.deltaTime;
+        if (triggerSphereRef.enabled == false)
+        {
+            triggerSphereRef.enabled = true;
+        }
+        ringCasePos = ring.transform.parent.position;
+        //ringRb.useGravity = false;
+        ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z) * throwingSpeed * Time.deltaTime;
     }
     private void Camera()
     {
@@ -129,12 +143,29 @@ public class PlayerControlRingVersion : MonoBehaviour
 
     private void GrabRing()
     {
-        if (Vector3.Distance(ring.transform.position, ringOGPos) <= 0.5)
-        {
-            ring.transform.position = ringOGPos;
-            throwingSpeed *= -1;
-            ringRb.isKinematic = true;
-            throwing = false;
-        }
+        ring.transform.localPosition = ringOGPos;
+        ring.transform.eulerAngles = new Vector3(90, 0, 0);
+        ringRb.isKinematic = true;
+        //throwing = false;
+        //ringThrown = false;
+        triggerSphereRef.enabled = false;
+        charRing.SetActive(true);
+        ring.SetActive(false);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //if (ringThrown && grabbing)
+        //{
+        //    GrabRing();
+        //}
+
+        GrabRing();
+    }
+
+    IEnumerable throwingCoutdown()
+    {
+        yield return new WaitForSeconds(0.1f);
+        triggerSphereRef.enabled = true;
     }
 }
