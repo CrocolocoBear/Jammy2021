@@ -15,6 +15,7 @@ public class PlayerControlScript : MonoBehaviour
     Camera cam;
     bool throwing = false;
     bool ringThrown = false;
+    bool retrieving = false;
     Vector3 ringOGPos;
     float throwingSpeed = 20;
 
@@ -40,6 +41,12 @@ public class PlayerControlScript : MonoBehaviour
         {
             Throw();
             ringThrown = true;
+        }
+        if (ringThrown && retrieving)
+        {
+            Retrieve();
+            ringThrown = false;
+            retrieving = false;
         }
 
         /*
@@ -80,6 +87,10 @@ public class PlayerControlScript : MonoBehaviour
         {
             throwing = true;
         }
+        if (Input.GetMouseButtonDown(1))
+        {
+            retrieving = true;
+        }
 
         desiredVelocity = (normalVelocityX + normalVelocityZ) * speed;
         Move(desiredVelocity, rotation);
@@ -95,10 +106,14 @@ public class PlayerControlScript : MonoBehaviour
     {
         ringRb.isKinematic = false;
         ringRb.useGravity = true;
-        ringRb.velocity += new Vector3(0, 0, throwingSpeed);
+        ringRb.velocity += cam.transform.forward.normalized * throwingSpeed;
         throwing = false;
     }
-
+    private void Retrieve()
+    {
+        ringRb.useGravity = false;
+        ringRb.velocity += new Vector3(ringOGPos.x - 0, ringOGPos.y - 0, ringOGPos.z - 0);
+    }
     private void Camera()
     {
         float rotSpeed = -2f;
