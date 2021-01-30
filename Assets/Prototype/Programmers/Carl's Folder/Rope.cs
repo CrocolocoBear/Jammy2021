@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Code based on https://youtu.be/FcnvwtyxLds guide. Small alterations made where needed, as well as converted to work in 3D.
+
 public class Rope : MonoBehaviour
 {
-
     private LineRenderer lineRenderer;
     public GameObject endPoint;
     private List<RopeSegment> ropeSegments = new List<RopeSegment>();
     private float ropeSegLen = 0.25f;
-    private int segmentLength = 35;
+    [SerializeField] private int segmentLength = 35;
     private float lineWidth = 0.1f;
 
     // Use this for initialization
@@ -60,7 +61,7 @@ public class Rope : MonoBehaviour
 
     private void ApplyConstraint()
     {
-        //Constrant to Mouse
+        //Constraint to Mouse
         RopeSegment firstSegment = this.ropeSegments[0];
         firstSegment.posNow = this.transform.position;
         this.ropeSegments[0] = firstSegment;

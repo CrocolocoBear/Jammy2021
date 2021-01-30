@@ -52,15 +52,18 @@ public class PlayerControlRingVersion : MonoBehaviour
         //}
         if (throwing)
         {
-            Throw();
+            if (ringThrown == false)
+            {
+                Throw();
+            }
             //ringThrown = true;
         }
-        if (ringThrown && retrieving)
-        {
-            //Retrieve();
-            grabbing = true;
-            //retrieving = false;
-        }
+        //if (ringThrown && retrieving)
+        //{
+        //    Retrieve();
+        //    grabbing = true;
+        //    retrieving = false;
+        //}
 
         /*
         else
@@ -124,6 +127,7 @@ public class PlayerControlRingVersion : MonoBehaviour
         //ringRb.useGravity = true;
         ringRb.velocity += cam.transform.forward.normalized * throwingSpeed;
         throwing = false;
+        ringThrown = true;
         //StartCoroutine("throwingCoutdown");
     }
     private void Retrieve()
@@ -147,8 +151,8 @@ public class PlayerControlRingVersion : MonoBehaviour
         ring.transform.localPosition = ringOGPos;
         ring.transform.eulerAngles = new Vector3(90, 0, 0);
         ringRb.isKinematic = true;
-        //throwing = false;
-        //ringThrown = false;
+        throwing = false;
+        ringThrown = false;
         triggerSphereRef.enabled = false;
         charRing.SetActive(true);
         ring.SetActive(false);
