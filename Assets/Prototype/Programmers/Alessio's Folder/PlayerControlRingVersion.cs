@@ -7,6 +7,7 @@ public class PlayerControlRingVersion : MonoBehaviour
     Rigidbody rb;
     Rigidbody ringRb;
     public GameObject ring;
+    public GameObject ringCase;
     //public List<Transform> arms;
     private float velocity;
     float rotation = 0;
@@ -29,7 +30,8 @@ public class PlayerControlRingVersion : MonoBehaviour
         Application.targetFrameRate = 60;
         rb = this.GetComponent<Rigidbody>();
         cam = this.GetComponentInChildren<Camera>();
-        ringCasePos = ring.transform.parent.position;
+        ringCasePos = ringCase.transform.position;
+        //ringCasePos = ring.transform.parent.position;
         ringOGPos = ring.transform.localPosition;
         ringRb = ring.GetComponent<Rigidbody>();
         triggerSphereRef = GetComponent<SphereCollider>();
@@ -149,7 +151,7 @@ public class PlayerControlRingVersion : MonoBehaviour
         {
             triggerSphereRef.enabled = true;
         }
-        ringCasePos = ring.transform.parent.position;
+        //ringCasePos = ring.transform.parent.position;
         //ringRb.useGravity = false;
         ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z).normalized * throwingSpeed * Time.deltaTime;
     }
