@@ -15,7 +15,7 @@ public class PlayerPrototype : MonoBehaviour
     bool throwing = false;
     Vector3 ringOGPos;
     float throwingSpeed = 50;
-
+    
     private void Awake()
     {
         rb = this.GetComponent<Rigidbody>();
@@ -32,10 +32,19 @@ public class PlayerPrototype : MonoBehaviour
     {
         PlayerInput();
         Camera();
+
         if(throwing) 
         {
            Throw();
         }
+        else
+        {
+            if (throwingSpeed < 0)
+            {
+                throwingSpeed = 50;
+            }
+        }
+
         Debug.Log(ringOGPos);
     }
 
@@ -76,11 +85,11 @@ public class PlayerPrototype : MonoBehaviour
 
     private void Throw()
     {
-        
         ring.transform.localPosition += new Vector3(0,0, throwingSpeed) * Time.deltaTime;
+
         if (Vector3.Distance(ring.transform.position, cam.transform.position) > 20)
         {
-            throwingSpeed *= -1;           
+            Return();
         }
 
         if (Vector3.Distance(ring.transform.position, cam.transform.position + (cam.transform.forward * ringOGPos.z) + (cam.transform.up * ringOGPos.y)) <= 0.2)
@@ -91,9 +100,19 @@ public class PlayerPrototype : MonoBehaviour
         }
     }
 
+    private void Return()
+    {
+        throwingSpeed = -50;
+    }
+
     private void Camera()
     {
         float rotSpeed = -2f;
         cam.transform.Rotate(rotSpeed * Input.GetAxis("Mouse Y"), 0, 0);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Return();
     }
 }
