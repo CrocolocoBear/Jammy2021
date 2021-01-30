@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,15 +51,13 @@ public class ThirdPersonMovement : MonoBehaviour
         playerVelocity.y += gravity * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
 
-        if (Input.GetMouseButtonDown(1) && aimCamera.activeInHierarchy == false)
+        if (Input.GetMouseButton(1))
         {
-            mainCamera.SetActive(false);
-            aimCamera.SetActive(true);
+            mainCamera.GetComponent<CinemachineFreeLook>().Priority = 9;
         }
-        else if(!Input.GetMouseButtonDown(1) && mainCamera.activeInHierarchy == false)
+        else
         {
-            mainCamera.SetActive(true);
-            aimCamera.SetActive(false);
+            mainCamera.GetComponent<CinemachineFreeLook>().Priority = 10000;
         }
     }
 }
