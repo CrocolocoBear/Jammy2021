@@ -8,7 +8,7 @@ public class PlayerControlScript : MonoBehaviour
     Rigidbody ringRb;
     public GameObject ring;
     //public List<Transform> arms;
-    private float velcoity;
+    private float velocity;
     float rotation = 0;
     Vector3 normalVelocityX;
     Vector3 normalVelocityZ;
@@ -16,8 +16,9 @@ public class PlayerControlScript : MonoBehaviour
     bool throwing = false;
     bool ringThrown = false;
     bool retrieving = false;
+    bool grabbing = false;
     Vector3 ringOGPos;
-    float throwingSpeed = 20;
+    float throwingSpeed = 10;
 
     private void Awake()
     {
@@ -45,8 +46,13 @@ public class PlayerControlScript : MonoBehaviour
         if (ringThrown && retrieving)
         {
             Retrieve();
-            ringThrown = false;
+            grabbing = true;
             retrieving = false;
+        }
+        if (ringThrown && grabbing)
+        {
+            GrabRing();
+            
         }
 
         /*
@@ -112,7 +118,9 @@ public class PlayerControlScript : MonoBehaviour
     private void Retrieve()
     {
         ringRb.useGravity = false;
-        ringRb.velocity += new Vector3(ringOGPos.x - 0, ringOGPos.y - 0, ringOGPos.z - 0);
+        ringRb.velocity += new Vector3(cam.transform.position.x - ring.transform.position.x, cam.transform.position.y - ring.transform.position.y, cam.transform.position.z - ring.transform.position.z).normalized*throwingSpeed;
+        //ring.transform.localPosition += new Vector3(0, 0, throwingSpeed) * Time.deltaTime;
+
     }
     private void Camera()
     {
@@ -120,4 +128,14 @@ public class PlayerControlScript : MonoBehaviour
         cam.transform.Rotate(rotSpeed * Input.GetAxis("Mouse Y"), 0, 0);
     }
 
+    private void GrabRing()
+    {
+        if (Vector3.Distance(ring.transform.position, cam.transform.position + (cam.transform.forward * ringOGPos.z) + (cam.transform.up * ringOGPos.y)) <= 0.5)
+        {
+            ring.transform.position = cam.transform.position + (cam.transform.forward * ringOGPos.z) + (cam.transform.up * ringOGPos.y);
+            throwingSpeed *= -1;
+            ringRb.isKinematic = true;
+            throwing = false;
+        }
+    }
 }
