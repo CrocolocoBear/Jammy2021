@@ -40,7 +40,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
 
-        if (direction != Vector3.zero)
+        if (direction != Vector3.zero && !Input.GetMouseButton(1))
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
@@ -54,10 +54,14 @@ public class ThirdPersonMovement : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             mainCamera.GetComponent<CinemachineFreeLook>().Priority = 9;
+            Vector3 targetAimAngle = new Vector3(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0f) * 100f * Time.deltaTime;
+            targetAimAngle.z = 0f;
+            gameObject.transform.GetChild(1).transform.Rotate(targetAimAngle);
         }
         else
         {
             mainCamera.GetComponent<CinemachineFreeLook>().Priority = 10000;
+            gameObject.transform.GetChild(1).transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
     }
 }
