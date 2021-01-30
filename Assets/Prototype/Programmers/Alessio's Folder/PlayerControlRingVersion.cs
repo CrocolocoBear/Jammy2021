@@ -52,15 +52,18 @@ public class PlayerControlRingVersion : MonoBehaviour
         //}
         if (throwing)
         {
-            Throw();
+            if (ringThrown == false)
+            {
+                Throw();
+            }
             //ringThrown = true;
         }
-        if (ringThrown && retrieving)
-        {
-            //Retrieve();
-            grabbing = true;
-            //retrieving = false;
-        }
+        //if (ringThrown && retrieving)
+        //{
+        //    Retrieve();
+        //    grabbing = true;
+        //    retrieving = false;
+        //}
 
         /*
         else
@@ -148,7 +151,7 @@ public class PlayerControlRingVersion : MonoBehaviour
         ring.transform.eulerAngles = new Vector3(90, 0, 0);
         ringRb.isKinematic = true;
         //throwing = false;
-        //ringThrown = false;
+        //ringThrown = true;
         triggerSphereRef.enabled = false;
         charRing.SetActive(true);
         ring.SetActive(false);

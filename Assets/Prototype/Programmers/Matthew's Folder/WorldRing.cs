@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorldKey : MonoBehaviour
+public class WorldRing : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
