@@ -165,7 +165,10 @@ public class PlayerControlRingVersion : MonoBehaviour
         //    GrabRing();
         //}
 
-        GrabRing();
+        if (other.tag == "RingThrow")
+        {
+            GrabRing();
+        }
     }
 
     IEnumerable throwingCoutdown()
