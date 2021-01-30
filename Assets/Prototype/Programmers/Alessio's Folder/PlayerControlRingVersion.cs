@@ -30,7 +30,9 @@ public class PlayerControlRingVersion : MonoBehaviour
         Application.targetFrameRate = 60;
         rb = this.GetComponent<Rigidbody>();
         cam = this.GetComponentInChildren<Camera>();
+        ringCase.transform.localPosition = new Vector3(0, 0, 2);
         ringCasePos = ringCase.transform.position;
+        ring.transform.position = ringCasePos;
         //ringCasePos = ring.transform.parent.position;
         ringOGPos = ring.transform.localPosition;
         ringRb = ring.GetComponent<Rigidbody>();
@@ -48,7 +50,7 @@ public class PlayerControlRingVersion : MonoBehaviour
     {
         PlayerInput();
         Camera();
-
+        
         //if (throwing && ringThrown == false)
         //{
         //    Throw();
@@ -151,6 +153,7 @@ public class PlayerControlRingVersion : MonoBehaviour
         {
             triggerSphereRef.enabled = true;
         }
+        ringCasePos = ringCase.transform.position;
         //ringCasePos = ring.transform.parent.position;
         //ringRb.useGravity = false;
         ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z).normalized * throwingSpeed * Time.deltaTime;
