@@ -28,6 +28,8 @@ public class PlayerControlRingVersion : MonoBehaviour
     float yCamOffset = 0;
     int requeiredKeys = 0;
     Vector3 checkLastContact = Vector3.zero;
+    int numOfJumps;
+    public GameObject bigKeyRef;
 
     public Rigidbody GetRBRing()
     {
@@ -38,6 +40,10 @@ public class PlayerControlRingVersion : MonoBehaviour
         stickCheck = setCheck;
         yCamOffset = setRot;
         requeiredKeys = setKeys;
+    }
+    public void SetJumps(int n)
+    {
+        numOfJumps = n;
     }
     private void Awake()
     {
@@ -144,6 +150,12 @@ public class PlayerControlRingVersion : MonoBehaviour
             //retrieving = true;
             Retrieve();
         }
+        if(Input.GetKeyDown(KeyCode.Space) && numOfJumps > 0)
+        {
+            walkAnimator.SetTrigger("jumpTrigger");
+            numOfJumps--;
+            rb.AddForce(Vector3.up * 300, ForceMode.Impulse);
+        }
 
         desiredVelocity = (normalVelocityX + normalVelocityZ) * speed;
         Move(desiredVelocity, rotation);
@@ -164,6 +176,14 @@ public class PlayerControlRingVersion : MonoBehaviour
         ringRb.velocity += cam.transform.forward.normalized * throwingSpeed;
         throwing = false;
         ringThrown = true;
+        if (GetComponent<KeyPickup>().GetKeys() >= 1)
+        {
+            bigKeyRef.SetActive(true);
+        }
+        else
+        {
+            bigKeyRef.SetActive(false);
+        }
         //StartCoroutine("throwingCoutdown");
     }
     private void Retrieve()
@@ -175,19 +195,27 @@ public class PlayerControlRingVersion : MonoBehaviour
         ringCasePos = ringCase.transform.position;
         //ringCasePos = ring.transform.parent.position;
         //ringRb.useGravity = false;
-        if (GetComponent<KeyPickup>().GetKeys() - requeiredKeys >= 0 )
+        if (GetComponent<KeyPickup>().GetKeys() >= 1)
         {
-            if (ring.activeSelf == true && checkLastContact != GetComponentInChildren<StickRing>().GetPointOfCollision())
+            if (GetComponent<KeyPickup>().GetKeys() - requeiredKeys >= 0)
             {
-                this.transform.position += (GetComponentInChildren<StickRing>().GetPointOfCollision() - this.transform.position).normalized * throwingSpeed * Time.deltaTime;
-                ring.transform.position = GetComponentInChildren<StickRing>().GetPointOfCollision();
-                walkAnimator.SetBool("climbCheck", true);
+                if (ring.activeSelf == true && checkLastContact != GetComponentInChildren<StickRing>().GetPointOfCollision())
+                {
+                    this.transform.position += (GetComponentInChildren<StickRing>().GetPointOfCollision() - this.transform.position).normalized * throwingSpeed * Time.deltaTime;
+                    ring.transform.position = GetComponentInChildren<StickRing>().GetPointOfCollision();
+                    walkAnimator.SetBool("climbCheck", true);
+                }
+            }
+            else
+            {
+                ringRb.constraints = RigidbodyConstraints.None;
+                ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z) * (throwingSpeed / 5) * Time.deltaTime;
             }
         }
         else
         {
             ringRb.constraints = RigidbodyConstraints.None;
-            ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z).normalized * throwingSpeed * Time.deltaTime;   
+            ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z) * (throwingSpeed / 5) * Time.deltaTime;
         }
     }
     private void Camera()
@@ -226,13 +254,13 @@ public class PlayerControlRingVersion : MonoBehaviour
             GrabRing();
         }
 
-        if (other.tag == "climbing")
-        {
-            if (ring.activeSelf == false)
-            {
-                rb.AddForce(Vector3.up * 300, ForceMode.Impulse);
-            }
-            //rb.AddForce(cam.transform.forward * 200, ForceMode.Impulse);
-        }
+        //if (other.tag == "climbing")
+        //{
+        //    if (ring.activeSelf == false)
+        //    {
+        //        rb.AddForce(Vector3.up * 300, ForceMode.Impulse);
+        //    }
+        //    rb.AddForce(cam.transform.forward * 200, ForceMode.Impulse);
+        //}
     }
 }
