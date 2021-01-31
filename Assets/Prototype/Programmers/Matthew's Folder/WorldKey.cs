@@ -15,6 +15,7 @@ public class WorldKey : MonoBehaviour
                 GameObject.FindWithTag("Dialogue").GetComponent<TypewriterEffect>().PickText(gameObject.name);
                 GameObject.FindWithTag("Dialogue").GetComponent<TypewriterEffect>().StartText();
 
+                gameObject.SetActive(false);
                 Destroy(gameObject);
             }
         }
