@@ -28,7 +28,7 @@ public class PlayerControlRingVersion : MonoBehaviour
     float yCamOffset = 0;
     int requeiredKeys = 0;
     Vector3 checkLastContact = Vector3.zero;
-
+    int numOfJumps;
     public Rigidbody GetRBRing()
     {
         return ringRb;
@@ -39,12 +39,16 @@ public class PlayerControlRingVersion : MonoBehaviour
         yCamOffset = setRot;
         requeiredKeys = setKeys;
     }
+    public void SetJumps(int n)
+    {
+        numOfJumps = n;
+    }
     private void Awake()
     {
         Application.targetFrameRate = 60;
         rb = this.GetComponent<Rigidbody>();
         cam = this.GetComponentInChildren<Camera>();
-        ringCase.transform.localPosition = new Vector3(0, 0, 2);
+        ringCase.transform.localPosition = new Vector3(0, 1, 2);
         ringCasePos = ringCase.transform.position;
         ring.transform.position = ringCasePos;
         //ringCasePos = ring.transform.parent.position;
@@ -62,41 +66,43 @@ public class PlayerControlRingVersion : MonoBehaviour
 
     private void Update()
     {
-        PlayerInput();
-        Camera();
-
-        rb.AddForce(Vector3.down * 5, ForceMode.Impulse);
-
-        //if (throwing && ringThrown == false)
-        //{
-        //    Throw();
-        //    ringThrown = true;
-        //}
-        if (throwing)
+        if (GameObject.Find("PauseMenu") == null)
         {
-            if (ringThrown == false)
-            {
-                Throw();
-            }
-            //ringThrown = true;
-        }
-        //if (ringThrown && retrieving)
-        //{
-        //    Retrieve();
-        //    grabbing = true;
-        //    retrieving = false;
-        //}
+            PlayerInput();
+            Camera();
 
-        /*
-        else
-        {
-            if (throwingSpeed < 0)
-            {
-                throwingSpeed = 50;
-            }
-        }
-        */
+            rb.AddForce(Vector3.down * 5, ForceMode.Impulse);
 
+            //if (throwing && ringThrown == false)
+            //{
+            //    Throw();
+            //    ringThrown = true;
+            //}
+            if (throwing)
+            {
+                if (ringThrown == false)
+                {
+                    Throw();
+                }
+                //ringThrown = true;
+            }
+            //if (ringThrown && retrieving)
+            //{
+            //    Retrieve();
+            //    grabbing = true;
+            //    retrieving = false;
+            //}
+
+            /*
+            else
+            {
+                if (throwingSpeed < 0)
+                {
+                    throwingSpeed = 50;
+                }
+            }
+            */
+        }
     }
 
 
@@ -142,6 +148,12 @@ public class PlayerControlRingVersion : MonoBehaviour
             //retrieving = true;
             Retrieve();
         }
+        if(Input.GetKeyDown(KeyCode.Space) && numOfJumps > 0)
+        {
+            walkAnimator.SetTrigger("jumpTrigger");
+            numOfJumps--;
+            rb.AddForce(Vector3.up * 300, ForceMode.Impulse);
+        }
 
         desiredVelocity = (normalVelocityX + normalVelocityZ) * speed;
         Move(desiredVelocity, rotation);
@@ -185,7 +197,7 @@ public class PlayerControlRingVersion : MonoBehaviour
         else
         {
             ringRb.constraints = RigidbodyConstraints.None;
-            ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z).normalized * throwingSpeed * Time.deltaTime;   
+            ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z) * (throwingSpeed/5) * Time.deltaTime;   
         }
     }
     private void Camera()
@@ -224,13 +236,13 @@ public class PlayerControlRingVersion : MonoBehaviour
             GrabRing();
         }
 
-        if (other.tag == "climbing")
-        {
-            if (ring.activeSelf == false)
-            {
-                rb.AddForce(Vector3.up * 300, ForceMode.Impulse);
-            }
-            //rb.AddForce(cam.transform.forward * 200, ForceMode.Impulse);
-        }
+        //if (other.tag == "climbing")
+        //{
+        //    if (ring.activeSelf == false)
+        //    {
+        //        rb.AddForce(Vector3.up * 300, ForceMode.Impulse);
+        //    }
+        //    rb.AddForce(cam.transform.forward * 200, ForceMode.Impulse);
+        //}
     }
 }
