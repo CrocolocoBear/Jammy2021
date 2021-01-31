@@ -30,7 +30,7 @@ public class TypewriterEffect : MonoBehaviour
                         "the world. Her laptop wallpaper always had her smiling right back at her " +
                         "whenever she needed her most.",
                         //Oven Script
-                        "[ding of oven timer finishing]”Mmhh, that smells good mum” “wait til it’s cooler honey, or you’ll burn your mouth” " +
+                        "*ding of oven timer finishing* ”Mmhh, that smells good mum” “wait til it’s cooler honey, or you’ll burn your mouth” " +
                         "The taste of home baked cookies, it's " +
                         "a sweet smell touching every corner of the house. " +
                         "They never come out quite like mum makes.",
@@ -113,7 +113,7 @@ public class TypewriterEffect : MonoBehaviour
                 currents[2] = voices[0];
                 textDelay = 0.03f;
                 initialDelay = 0.5f;
-                soundLength = 4.5f;
+                soundLength = 9.5f;
                 tutorial = false;
                 break;
             //The family Photo
@@ -133,9 +133,9 @@ public class TypewriterEffect : MonoBehaviour
                 currents[0] = effects[4];
                 currents[1] = effects[5];
                 currents[2] = voices[2];
-                textDelay = 0.03f;
-                initialDelay = 0.0f;
-                soundLength = 1.0f;
+                textDelay = 0.06f;
+                initialDelay = 0.5f;
+                soundLength = 5.0f;
                 tutorial = false;
                 break;
             //The Oven
@@ -146,7 +146,7 @@ public class TypewriterEffect : MonoBehaviour
                 currents[2] = voices[3];
                 textDelay = 0.03f;
                 initialDelay = 0.0f;
-                soundLength = 3.0f;
+                soundLength = 12.0f;
                 tutorial = false;
                 break;
             //the Shoebox
@@ -157,7 +157,7 @@ public class TypewriterEffect : MonoBehaviour
                 currents[2] = voices[4];
                 textDelay = 0.03f;
                 initialDelay = 0.0f;
-                soundLength = 6.0f;
+                soundLength = 10.0f;
                 tutorial = true;
                 break;
             //The Fan
@@ -168,7 +168,7 @@ public class TypewriterEffect : MonoBehaviour
                 currents[2] = voices[5];
                 textDelay = 0.03f;
                 initialDelay = 0.0f;
-                soundLength = 3.0f;
+                soundLength = 12.0f;
                 tutorial = false;
                 break;
             //The Medicine Cabinet
