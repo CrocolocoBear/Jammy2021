@@ -30,7 +30,7 @@ public class TypewriterEffect : MonoBehaviour
                         "the world. Her laptop wallpaper always had her smiling right back at her " +
                         "whenever she needed her most.",
                         //Oven Script
-                        "[ding of oven timer finishing]”Mmhh, that smells good mum” “wait til it’s cooler honey, or you’ll burn your mouth” " +
+                        "*ding of oven timer finishing* ”Mmhh, that smells good mum” “wait til it’s cooler honey, or you’ll burn your mouth” " +
                         "The taste of home baked cookies, it's " +
                         "a sweet smell touching every corner of the house. " +
                         "They never come out quite like mum makes.",
@@ -39,7 +39,7 @@ public class TypewriterEffect : MonoBehaviour
                         "Her dad meant a lot to her; she always saw him as her inspiration while growing up. " +
                         "What was kept in the dark was left there for a reason.",
                         //Fan Script
-                        "*whooshing sounds* *laughter* “I often sit and wish that I could be a kite up in the sky.”" +
+                        "*laughter* “I often sit and wish that I could be a kite up in the sky.”" +
                         "Oh how free it must be. Head in the clouds, but tied down as always. " +
                         "What happens when the little girl lets go?",
                         //Medicine Cabinet Script
@@ -55,8 +55,9 @@ public class TypewriterEffect : MonoBehaviour
 
     string climbTut =   "Click left mouse button to throw your keyring" + "\n" + 
                         "Your keyring can stick to surfaces if you have enough keys" + "\n" +
-                        "Click right mouse button to pull yourself to your keyring";
-    string moveTut = "WASD - Move" + "\n" + "Spacebar - Jump"; 
+                        "Click right mouse button to pull yourself to your keyring" + "\n" +
+                        "Moving on in life is the key to everything";
+    string moveTut = "WASD - Move" + "\n" + "Spacebar - Jump" + "\n" + "Mouse to look around"; 
 
     AudioSource audioController;
 
@@ -70,6 +71,8 @@ public class TypewriterEffect : MonoBehaviour
         background = GameObject.FindWithTag("DBack");
         background.SetActive(false);
         audioController = gameObject.GetComponent<AudioSource>();
+
+        StartCoroutine("MoveTutTimer");
     }
 
     IEnumerator ShowText()
@@ -106,14 +109,14 @@ public class TypewriterEffect : MonoBehaviour
         switch(name)
         {
             //The Diary
-            case "KeyOne":
+            case "KeyThree":
                 text = script[0];
                 currents[0] = effects[0];
                 currents[1] = effects[1];
                 currents[2] = voices[0];
                 textDelay = 0.03f;
                 initialDelay = 0.5f;
-                soundLength = 4.5f;
+                soundLength = 9.5f;
                 tutorial = false;
                 break;
             //The family Photo
@@ -128,51 +131,51 @@ public class TypewriterEffect : MonoBehaviour
                 tutorial = false;
                 break;
             //The Laptop
-            case "KeyThree":
+            case "KeyFour":
                 text = script[2];
                 currents[0] = effects[4];
                 currents[1] = effects[5];
                 currents[2] = voices[2];
-                textDelay = 0.03f;
-                initialDelay = 0.0f;
-                soundLength = 1.0f;
+                textDelay = 0.06f;
+                initialDelay = 0.5f;
+                soundLength = 5.0f;
                 tutorial = false;
                 break;
             //The Oven
-            case "KeyFour":
+            case "KeySix":
                 text = script[3];
                 currents[0] = effects[6];
                 currents[1] = effects[7];
                 currents[2] = voices[3];
                 textDelay = 0.03f;
                 initialDelay = 0.0f;
-                soundLength = 3.0f;
+                soundLength = 12.0f;
                 tutorial = false;
                 break;
             //the Shoebox
-            case "KeyFive":
+            case "KeyOne":
                 text = script[4];
                 currents[0] = effects[8];
                 currents[1] = effects[9];
                 currents[2] = voices[4];
                 textDelay = 0.03f;
                 initialDelay = 0.0f;
-                soundLength = 6.0f;
+                soundLength = 10.0f;
                 tutorial = true;
                 break;
             //The Fan
-            case "KeySix":
+            case "KeySeven":
                 text = script[5];
                 currents[0] = effects[10];
                 currents[1] = effects[11];
                 currents[2] = voices[5];
                 textDelay = 0.03f;
                 initialDelay = 0.0f;
-                soundLength = 3.0f;
+                soundLength = 12.0f;
                 tutorial = false;
                 break;
             //The Medicine Cabinet
-            case "KeySeven":
+            case "KeyEight":
                 text = script[6];
                 currents[0] = effects[12];
                 currents[1] = effects[13];
@@ -183,7 +186,7 @@ public class TypewriterEffect : MonoBehaviour
                 tutorial = false;
                 break;
             //The Mug
-            case "KeyEight":
+            case "KeyFive":
                 text = script[7];
                 currents[0] = effects[14];
                 currents[1] = effects[15];
@@ -241,5 +244,11 @@ public class TypewriterEffect : MonoBehaviour
         soundLength = 3.0f;
         background.SetActive(true);
         StartCoroutine("ShowText");
+    }
+
+    IEnumerator MoveTutTimer()
+    {
+        yield return new WaitForSeconds(3.0f);
+        MoveTut();
     }
 }
