@@ -55,7 +55,8 @@ public class TypewriterEffect : MonoBehaviour
 
     string climbTut =   "Click left mouse button to throw your keyring" + "\n" + 
                         "Your keyring can stick to surfaces if you have enough keys" + "\n" +
-                        "Click right mouse button to pull yourself to your keyring";
+                        "Click right mouse button to pull yourself to your keyring" + "\n" +
+                        "Moving on in life is the key to everything";
     string moveTut = "WASD - Move" + "\n" + "Spacebar - Jump" + "\n" + "Mouse to look around"; 
 
     AudioSource audioController;
