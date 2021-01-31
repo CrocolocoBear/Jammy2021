@@ -108,7 +108,7 @@ public class TypewriterEffect : MonoBehaviour
         switch(name)
         {
             //The Diary
-            case "KeyOne":
+            case "KeyThree":
                 text = script[0];
                 currents[0] = effects[0];
                 currents[1] = effects[1];
@@ -130,7 +130,7 @@ public class TypewriterEffect : MonoBehaviour
                 tutorial = false;
                 break;
             //The Laptop
-            case "KeyThree":
+            case "KeyFour":
                 text = script[2];
                 currents[0] = effects[4];
                 currents[1] = effects[5];
@@ -141,7 +141,7 @@ public class TypewriterEffect : MonoBehaviour
                 tutorial = false;
                 break;
             //The Oven
-            case "KeyFour":
+            case "KeySix":
                 text = script[3];
                 currents[0] = effects[6];
                 currents[1] = effects[7];
@@ -152,7 +152,7 @@ public class TypewriterEffect : MonoBehaviour
                 tutorial = false;
                 break;
             //the Shoebox
-            case "KeyFive":
+            case "KeyOne":
                 text = script[4];
                 currents[0] = effects[8];
                 currents[1] = effects[9];
@@ -163,7 +163,7 @@ public class TypewriterEffect : MonoBehaviour
                 tutorial = true;
                 break;
             //The Fan
-            case "KeySix":
+            case "KeySeven":
                 text = script[5];
                 currents[0] = effects[10];
                 currents[1] = effects[11];
@@ -174,7 +174,7 @@ public class TypewriterEffect : MonoBehaviour
                 tutorial = false;
                 break;
             //The Medicine Cabinet
-            case "KeySeven":
+            case "KeyEight":
                 text = script[6];
                 currents[0] = effects[12];
                 currents[1] = effects[13];
@@ -185,7 +185,7 @@ public class TypewriterEffect : MonoBehaviour
                 tutorial = false;
                 break;
             //The Mug
-            case "KeyEight":
+            case "KeyFive":
                 text = script[7];
                 currents[0] = effects[14];
                 currents[1] = effects[15];
