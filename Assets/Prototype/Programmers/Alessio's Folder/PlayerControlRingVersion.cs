@@ -62,41 +62,43 @@ public class PlayerControlRingVersion : MonoBehaviour
 
     private void Update()
     {
-        PlayerInput();
-        Camera();
-
-        rb.AddForce(Vector3.down * 5, ForceMode.Impulse);
-
-        //if (throwing && ringThrown == false)
-        //{
-        //    Throw();
-        //    ringThrown = true;
-        //}
-        if (throwing)
+        if (GameObject.Find("PauseMenu") == null)
         {
-            if (ringThrown == false)
-            {
-                Throw();
-            }
-            //ringThrown = true;
-        }
-        //if (ringThrown && retrieving)
-        //{
-        //    Retrieve();
-        //    grabbing = true;
-        //    retrieving = false;
-        //}
+            PlayerInput();
+            Camera();
 
-        /*
-        else
-        {
-            if (throwingSpeed < 0)
-            {
-                throwingSpeed = 50;
-            }
-        }
-        */
+            rb.AddForce(Vector3.down * 5, ForceMode.Impulse);
 
+            //if (throwing && ringThrown == false)
+            //{
+            //    Throw();
+            //    ringThrown = true;
+            //}
+            if (throwing)
+            {
+                if (ringThrown == false)
+                {
+                    Throw();
+                }
+                //ringThrown = true;
+            }
+            //if (ringThrown && retrieving)
+            //{
+            //    Retrieve();
+            //    grabbing = true;
+            //    retrieving = false;
+            //}
+
+            /*
+            else
+            {
+                if (throwingSpeed < 0)
+                {
+                    throwingSpeed = 50;
+                }
+            }
+            */
+        }
     }
 
 
