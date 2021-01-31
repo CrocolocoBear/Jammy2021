@@ -157,7 +157,7 @@ public class TypewriterEffect : MonoBehaviour
                 currents[2] = voices[4];
                 textDelay = 0.03f;
                 initialDelay = 0.0f;
-                soundLength = 3.0f;
+                soundLength = 6.0f;
                 tutorial = true;
                 break;
             //The Fan
