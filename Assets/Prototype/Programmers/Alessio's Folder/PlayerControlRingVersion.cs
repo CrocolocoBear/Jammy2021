@@ -135,6 +135,7 @@ public class PlayerControlRingVersion : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             throwing = true;
+            walkAnimator.SetTrigger("throwTrigger");
         }
         if (Input.GetMouseButton(1))
         {
@@ -178,6 +179,7 @@ public class PlayerControlRingVersion : MonoBehaviour
             {
                 this.transform.position += (GetComponentInChildren<StickRing>().GetPointOfCollision() - this.transform.position).normalized * throwingSpeed * Time.deltaTime;
                 ring.transform.position = GetComponentInChildren<StickRing>().GetPointOfCollision();
+                walkAnimator.SetBool("climbCheck", true);
             }
         }
         else
@@ -194,6 +196,7 @@ public class PlayerControlRingVersion : MonoBehaviour
 
     private void GrabRing()
     {
+        walkAnimator.SetBool("climbCheck", false);
         checkLastContact = GetComponentInChildren<StickRing>().GetPointOfCollision();
         ring.transform.localPosition = ringOGPos;
         ring.transform.eulerAngles = new Vector3(90, 0, 0);
