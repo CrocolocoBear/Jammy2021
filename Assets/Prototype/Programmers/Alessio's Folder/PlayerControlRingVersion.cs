@@ -156,11 +156,11 @@ public class PlayerControlRingVersion : MonoBehaviour
             numOfJumps--;
             rb.AddForce(Vector3.up * 300, ForceMode.Impulse);
         }
-        if(Input.GetKeyDown(KeyCode.C))
-        {
-            newkey++;
-            GetComponent<KeyPickup>().SeyKeys(newkey);
-        }
+        //if(Input.GetKeyDown(KeyCode.C))
+        //{
+        //    newkey++;
+        //    GetComponent<KeyPickup>().SeyKeys(newkey);
+        //}
 
         desiredVelocity = (normalVelocityX + normalVelocityZ) * speed;
         Move(desiredVelocity, rotation);

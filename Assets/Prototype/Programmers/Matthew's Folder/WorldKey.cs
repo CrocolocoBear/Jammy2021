@@ -8,7 +8,7 @@ public class WorldKey : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            if (other.gameObject.GetComponent<PlayerControllerPickup>().charRing.activeSelf == true)
+            if (other.gameObject.GetComponent<PlayerControlRingVersion>().charRing.activeSelf == true)
             {
                 other.gameObject.GetComponent<KeyPickup>().Pickup(gameObject.name);
 
