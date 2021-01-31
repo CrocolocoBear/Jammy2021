@@ -5,13 +5,12 @@ using TMPro;
 
 public class KeyCounter : MonoBehaviour
 {
-    GameObject player;
+    [SerializeField] GameObject player;
     public int noOfKeys = 0;
     TextMeshProUGUI mtext;
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("player");
         mtext = this.GetComponent<TextMeshProUGUI>();
     }
     private void Update()
