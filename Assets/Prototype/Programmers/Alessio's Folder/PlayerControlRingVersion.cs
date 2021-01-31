@@ -199,11 +199,16 @@ public class PlayerControlRingVersion : MonoBehaviour
         {
             if (GetComponent<KeyPickup>().GetKeys() - requeiredKeys >= 0)
             {
-                if (ring.activeSelf == true && checkLastContact != GetComponentInChildren<StickRing>().GetPointOfCollision())
+                if (ring.activeSelf == true && Vector3.Distance(checkLastContact,GetComponentInChildren<StickRing>().GetPointOfCollision()) > 2)
                 {
                     this.transform.position += (GetComponentInChildren<StickRing>().GetPointOfCollision() - this.transform.position).normalized * throwingSpeed * Time.deltaTime;
                     ring.transform.position = GetComponentInChildren<StickRing>().GetPointOfCollision();
                     walkAnimator.SetBool("climbCheck", true);
+                }
+                else
+                {
+                    ringRb.constraints = RigidbodyConstraints.None;
+                    ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z) * (throwingSpeed / 5) * Time.deltaTime;
                 }
             }
             else
