@@ -119,7 +119,7 @@ public class TypewriterEffect : MonoBehaviour
                 currents[2] = voices[0];
                 textDelay = 0.03f;
                 initialDelay = 0.5f;
-                soundLength = 9.5f;
+                soundLength = 20.5f;
                 tutorial = false;
                 break;
             //The family Photo
@@ -130,7 +130,7 @@ public class TypewriterEffect : MonoBehaviour
                 currents[2] = voices[1];
                 textDelay = 0.05f;
                 initialDelay = 0.2f;
-                soundLength = 4.5f;
+                soundLength = 24.5f;
                 tutorial = false;
                 break;
             //The Laptop
@@ -141,7 +141,7 @@ public class TypewriterEffect : MonoBehaviour
                 currents[2] = voices[2];
                 textDelay = 0.06f;
                 initialDelay = 0.5f;
-                soundLength = 5.0f;
+                soundLength = 25.0f;
                 tutorial = false;
                 break;
             //The Oven
@@ -152,7 +152,7 @@ public class TypewriterEffect : MonoBehaviour
                 currents[2] = voices[3];
                 textDelay = 0.03f;
                 initialDelay = 0.0f;
-                soundLength = 12.0f;
+                soundLength = 22.0f;
                 tutorial = false;
                 break;
             //the Shoebox
@@ -163,7 +163,7 @@ public class TypewriterEffect : MonoBehaviour
                 currents[2] = voices[4];
                 textDelay = 0.03f;
                 initialDelay = 0.0f;
-                soundLength = 10.0f;
+                soundLength = 20.0f;
                 tutorial = true;
                 break;
             //The Fan
@@ -174,7 +174,7 @@ public class TypewriterEffect : MonoBehaviour
                 currents[2] = voices[5];
                 textDelay = 0.03f;
                 initialDelay = 0.0f;
-                soundLength = 12.0f;
+                soundLength = 22.0f;
                 tutorial = false;
                 break;
             //The Medicine Cabinet
@@ -185,7 +185,7 @@ public class TypewriterEffect : MonoBehaviour
                 currents[2] = voices[6];
                 textDelay = 0.1f;
                 initialDelay = 0.0f;
-                soundLength = 3.0f;
+                soundLength = 23.0f;
                 tutorial = false;
                 break;
             //The Mug
@@ -196,7 +196,7 @@ public class TypewriterEffect : MonoBehaviour
                 currents[2] = voices[7];
                 textDelay = 0.06f;
                 initialDelay = 0.2f;
-                soundLength = 4.3f;
+                soundLength = 24.3f;
                 tutorial = false;
                 break;
             default:
@@ -206,7 +206,7 @@ public class TypewriterEffect : MonoBehaviour
                 currents[2] = voices[8];
                 textDelay = 0.03f;
                 initialDelay = 0.0f;
-                soundLength = 2.0f;
+                soundLength = 22.0f;
                 tutorial = false;
                 break;
         }
@@ -244,7 +244,7 @@ public class TypewriterEffect : MonoBehaviour
         text = moveTut;
         textDelay = 0.03f;
         initialDelay = 0.0f;
-        soundLength = 3.0f;
+        soundLength = 13.0f;
         background.SetActive(true);
         StartCoroutine("ShowText");
     }
