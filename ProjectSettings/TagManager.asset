@@ -10,6 +10,14 @@ TagManager:
   - KeyBack
   - RingThrow
   - BigKey
+  - 1Key
+  - 2Key
+  - 3Key
+  - 4Key
+  - 5Key
+  - 6Key
+  - 7Key
+  - 8Key
   layers:
   - Default
   - TransparentFX

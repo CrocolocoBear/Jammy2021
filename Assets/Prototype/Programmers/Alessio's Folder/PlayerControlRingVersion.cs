@@ -30,7 +30,7 @@ public class PlayerControlRingVersion : MonoBehaviour
     Vector3 checkLastContact = Vector3.zero;
     int numOfJumps;
     public GameObject bigKeyRef;
-
+    int newkey;
     public Rigidbody GetRBRing()
     {
         return ringRb;
@@ -155,6 +155,11 @@ public class PlayerControlRingVersion : MonoBehaviour
             walkAnimator.SetTrigger("jumpTrigger");
             numOfJumps--;
             rb.AddForce(Vector3.up * 300, ForceMode.Impulse);
+        }
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            newkey++;
+            GetComponent<KeyPickup>().SeyKeys(newkey);
         }
 
         desiredVelocity = (normalVelocityX + normalVelocityZ) * speed;

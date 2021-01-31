@@ -44,6 +44,54 @@ public class StickRing : MonoBehaviour
                     i = 0;
                     GetComponentInParent<PlayerControlRingVersion>().GetRBRing().constraints = RigidbodyConstraints.FreezeAll;
                     break;
+                case "1Key":
+                    key = 1;
+                    camCheck = 1;
+                    i = 0;
+                    GetComponentInParent<PlayerControlRingVersion>().GetRBRing().constraints = RigidbodyConstraints.FreezeAll;
+                    break;
+                case "2Key":
+                    key = 2;
+                    camCheck = 1;
+                    i = 0;
+                    GetComponentInParent<PlayerControlRingVersion>().GetRBRing().constraints = RigidbodyConstraints.FreezeAll;
+                    break;
+                case "3Key":
+                    key = 3;
+                    camCheck = 1;
+                    i = 0;
+                    GetComponentInParent<PlayerControlRingVersion>().GetRBRing().constraints = RigidbodyConstraints.FreezeAll;
+                    break;
+                case "4Key":
+                    key = 4;
+                    camCheck = 1;
+                    i = 0;
+                    GetComponentInParent<PlayerControlRingVersion>().GetRBRing().constraints = RigidbodyConstraints.FreezeAll;
+                    break;
+                case "5Key":
+                    key = 5;
+                    camCheck = 1;
+                    i = 0;
+                    GetComponentInParent<PlayerControlRingVersion>().GetRBRing().constraints = RigidbodyConstraints.FreezeAll;
+                    break;
+                case "6Key":
+                    key = 6;
+                    camCheck = 1;
+                    i = 0;
+                    GetComponentInParent<PlayerControlRingVersion>().GetRBRing().constraints = RigidbodyConstraints.FreezeAll;
+                    break;
+                case "7Key":
+                    key = 7;
+                    camCheck = 1;
+                    i = 0;
+                    GetComponentInParent<PlayerControlRingVersion>().GetRBRing().constraints = RigidbodyConstraints.FreezeAll;
+                    break;
+                case "8Key":
+                    key = 8;
+                    camCheck = 1;
+                    i = 0;
+                    GetComponentInParent<PlayerControlRingVersion>().GetRBRing().constraints = RigidbodyConstraints.FreezeAll;
+                    break;
                 case "Untagged":
                     key = 10;
                     camCheck = 0;
