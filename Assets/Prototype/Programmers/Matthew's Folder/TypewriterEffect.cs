@@ -39,7 +39,7 @@ public class TypewriterEffect : MonoBehaviour
                         "Her dad meant a lot to her; she always saw him as her inspiration while growing up. " +
                         "What was kept in the dark was left there for a reason.",
                         //Fan Script
-                        "*whooshing sounds* *laughter* “I often sit and wish that I could be a kite up in the sky.”" +
+                        "*laughter* “I often sit and wish that I could be a kite up in the sky.”" +
                         "Oh how free it must be. Head in the clouds, but tied down as always. " +
                         "What happens when the little girl lets go?",
                         //Medicine Cabinet Script
@@ -56,7 +56,7 @@ public class TypewriterEffect : MonoBehaviour
     string climbTut =   "Click left mouse button to throw your keyring" + "\n" + 
                         "Your keyring can stick to surfaces if you have enough keys" + "\n" +
                         "Click right mouse button to pull yourself to your keyring";
-    string moveTut = "WASD - Move" + "\n" + "Spacebar - Jump"; 
+    string moveTut = "WASD - Move" + "\n" + "Spacebar - Jump" + "\n" + "Mouse to look around"; 
 
     AudioSource audioController;
 
@@ -70,6 +70,8 @@ public class TypewriterEffect : MonoBehaviour
         background = GameObject.FindWithTag("DBack");
         background.SetActive(false);
         audioController = gameObject.GetComponent<AudioSource>();
+
+        StartCoroutine("MoveTutTimer");
     }
 
     IEnumerator ShowText()
@@ -241,5 +243,11 @@ public class TypewriterEffect : MonoBehaviour
         soundLength = 3.0f;
         background.SetActive(true);
         StartCoroutine("ShowText");
+    }
+
+    IEnumerator MoveTutTimer()
+    {
+        yield return new WaitForSeconds(3.0f);
+        MoveTut();
     }
 }
