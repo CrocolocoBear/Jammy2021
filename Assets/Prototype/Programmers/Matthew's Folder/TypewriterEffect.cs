@@ -92,8 +92,9 @@ public class TypewriterEffect : MonoBehaviour
         ClearText();
         if(tutorial)
         {
-            dialogue.text = text;
+            
             text = climbTut;
+            dialogue.text = text;
             //foreach (char c in text)
             //{
             //    dialogue.text += c;
