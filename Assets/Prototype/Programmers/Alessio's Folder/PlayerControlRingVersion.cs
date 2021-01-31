@@ -44,7 +44,7 @@ public class PlayerControlRingVersion : MonoBehaviour
         Application.targetFrameRate = 60;
         rb = this.GetComponent<Rigidbody>();
         cam = this.GetComponentInChildren<Camera>();
-        ringCase.transform.localPosition = new Vector3(0, 0, 2);
+        ringCase.transform.localPosition = new Vector3(0, 1, 2);
         ringCasePos = ringCase.transform.position;
         ring.transform.position = ringCasePos;
         //ringCasePos = ring.transform.parent.position;
