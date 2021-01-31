@@ -6,8 +6,10 @@ using TMPro;
 public class KeyCounter : MonoBehaviour
 {
     [SerializeField] GameObject player;
+    [SerializeField] GameObject gameOverScreen;
     public int noOfKeys = 0;
     TextMeshProUGUI mtext;
+    bool gameOverStarted = false;
 
     private void Start()
     {
@@ -17,6 +19,12 @@ public class KeyCounter : MonoBehaviour
     {
         UpdateKeys();
         UpdateKeyCounter();
+        if (noOfKeys == 8 && gameOverStarted == false)
+        {
+            gameOverStarted = true;
+            StartCoroutine(GameOverDelay());
+            FinishGame();
+        }
     }
 
     private void UpdateKeys()
@@ -30,5 +38,15 @@ public class KeyCounter : MonoBehaviour
     private void UpdateKeyCounter()
     {
         mtext.text = noOfKeys.ToString();
+    }
+
+    private void FinishGame()
+    {
+        gameOverScreen.GetComponent<GameOverScreen>().GameOver = true;
+    }
+
+    IEnumerator GameOverDelay()
+    {
+        yield return new WaitForSeconds(15);
     }
 }
