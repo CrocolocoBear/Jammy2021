@@ -29,6 +29,8 @@ public class PlayerControlRingVersion : MonoBehaviour
     int requeiredKeys = 0;
     Vector3 checkLastContact = Vector3.zero;
     int numOfJumps;
+    public GameObject bigKeyRef;
+
     public Rigidbody GetRBRing()
     {
         return ringRb;
@@ -174,6 +176,14 @@ public class PlayerControlRingVersion : MonoBehaviour
         ringRb.velocity += cam.transform.forward.normalized * throwingSpeed;
         throwing = false;
         ringThrown = true;
+        if (GetComponent<KeyPickup>().GetKeys() >= 1)
+        {
+            bigKeyRef.SetActive(true);
+        }
+        else
+        {
+            bigKeyRef.SetActive(false);
+        }
         //StartCoroutine("throwingCoutdown");
     }
     private void Retrieve()
@@ -185,19 +195,27 @@ public class PlayerControlRingVersion : MonoBehaviour
         ringCasePos = ringCase.transform.position;
         //ringCasePos = ring.transform.parent.position;
         //ringRb.useGravity = false;
-        if (GetComponent<KeyPickup>().GetKeys() - requeiredKeys >= 0 )
+        if (GetComponent<KeyPickup>().GetKeys() >= 1)
         {
-            if (ring.activeSelf == true && checkLastContact != GetComponentInChildren<StickRing>().GetPointOfCollision())
+            if (GetComponent<KeyPickup>().GetKeys() - requeiredKeys >= 0)
             {
-                this.transform.position += (GetComponentInChildren<StickRing>().GetPointOfCollision() - this.transform.position).normalized * throwingSpeed * Time.deltaTime;
-                ring.transform.position = GetComponentInChildren<StickRing>().GetPointOfCollision();
-                walkAnimator.SetBool("climbCheck", true);
+                if (ring.activeSelf == true && checkLastContact != GetComponentInChildren<StickRing>().GetPointOfCollision())
+                {
+                    this.transform.position += (GetComponentInChildren<StickRing>().GetPointOfCollision() - this.transform.position).normalized * throwingSpeed * Time.deltaTime;
+                    ring.transform.position = GetComponentInChildren<StickRing>().GetPointOfCollision();
+                    walkAnimator.SetBool("climbCheck", true);
+                }
+            }
+            else
+            {
+                ringRb.constraints = RigidbodyConstraints.None;
+                ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z) * (throwingSpeed / 5) * Time.deltaTime;
             }
         }
         else
         {
             ringRb.constraints = RigidbodyConstraints.None;
-            ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z) * (throwingSpeed/5) * Time.deltaTime;   
+            ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z) * (throwingSpeed / 5) * Time.deltaTime;
         }
     }
     private void Camera()
