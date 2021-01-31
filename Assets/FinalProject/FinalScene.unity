@@ -573,6 +573,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.64951
       objectReference: {fileID: 0}
+    - target: {fileID: -615309114576341211, guid: 4cab8763b4b7e69469122cd23eff57d3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 467d45334699c2c42910e1e2f496b67e, type: 2}
     - target: {fileID: 919132149155446097, guid: 4cab8763b4b7e69469122cd23eff57d3, type: 3}
       propertyPath: m_Name
       value: big_drawer
