@@ -3,7 +3,27 @@ guid: c099b245596a89f42ab076261c39a2eb
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiGrandmaPhoto_Material
+    second: {fileID: 2100000, guid: a3ff9e983293d0748950aaa3598c212c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiTape_Material
+    second: {fileID: 2100000, guid: 2d27758713b629343817feee87b02170, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: aiWhite_Material
+    second: {fileID: 2100000, guid: 32eada57fdbe888469bd3c9f0a6db8bf, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Grandma
+    second: {fileID: 2800000, guid: 34c3a3b6dcb1cda43972a9f5cc1838d0, type: 3}
   materials:
     materialImportMode: 1
     materialName: 0
