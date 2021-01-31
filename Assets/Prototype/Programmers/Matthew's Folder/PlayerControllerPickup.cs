@@ -23,10 +23,9 @@ public class PlayerControllerPickup : MonoBehaviour
     SphereCollider triggerSphereRef;
     public GameObject charRing;
 
-    
-
     private void Awake()
     {
+        Application.targetFrameRate = 60;
         rb = this.GetComponent<Rigidbody>();
         cam = this.GetComponentInChildren<Camera>();
         ringCasePos = ring.transform.parent.position;
@@ -54,14 +53,15 @@ public class PlayerControllerPickup : MonoBehaviour
         if (throwing)
         {
             Throw();
+         
             //ringThrown = true;
         }
-        if (ringThrown && retrieving)
-        {
-            //Retrieve();
-            grabbing = true;
-            //retrieving = false;
-        }
+        //if (ringThrown && retrieving)
+        //{
+        //    Retrieve();
+        //    grabbing = true;
+        //    retrieving = false;
+        //}
 
         /*
         else
@@ -104,6 +104,7 @@ public class PlayerControllerPickup : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             //retrieving = true;
+
             Retrieve();
         }
 
@@ -125,6 +126,7 @@ public class PlayerControllerPickup : MonoBehaviour
         //ringRb.useGravity = true;
         ringRb.velocity += cam.transform.forward.normalized * throwingSpeed;
         throwing = false;
+        ringThrown = true;
         //StartCoroutine("throwingCoutdown");
     }
     private void Retrieve()
@@ -148,8 +150,8 @@ public class PlayerControllerPickup : MonoBehaviour
         ring.transform.localPosition = ringOGPos;
         ring.transform.eulerAngles = new Vector3(90, 0, 0);
         ringRb.isKinematic = true;
-        //throwing = false;
-        //ringThrown = false;
+        throwing = false;
+        ringThrown = false;
         triggerSphereRef.enabled = false;
         charRing.SetActive(true);
         ring.SetActive(false);
@@ -161,13 +163,12 @@ public class PlayerControllerPickup : MonoBehaviour
         //{
         //    GrabRing();
         //}
+
         if (other.tag == "RingThrow")
         {
             GrabRing();
         }
     }
-
-    
 
     IEnumerable throwingCoutdown()
     {
