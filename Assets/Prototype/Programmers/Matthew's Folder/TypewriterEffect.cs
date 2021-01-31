@@ -79,23 +79,26 @@ public class TypewriterEffect : MonoBehaviour
     {
         yield return new WaitForSeconds(initialDelay);
 
-        foreach(char c in text)
-        {
-            dialogue.text += c;
-            yield return new WaitForSeconds(textDelay);
-        }
+        dialogue.text = text;
+
+        //foreach(char c in text)
+        //{
+        //    dialogue.text += c;
+        //    yield return new WaitForSeconds(textDelay);
+        //}
 
         yield return new WaitForSeconds(soundLength);
 
         ClearText();
         if(tutorial)
         {
+            dialogue.text = text;
             text = climbTut;
-            foreach (char c in text)
-            {
-                dialogue.text += c;
-                yield return new WaitForSeconds(textDelay);
-            }
+            //foreach (char c in text)
+            //{
+            //    dialogue.text += c;
+            //    yield return new WaitForSeconds(textDelay);
+            //}
 
             yield return new WaitForSeconds(2.0f);
 
