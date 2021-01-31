@@ -7,6 +7,7 @@ public class PlayerControlRingVersion : MonoBehaviour
     Rigidbody rb;
     Rigidbody ringRb;
     public GameObject ring;
+    public GameObject ringCase;
     //public List<Transform> arms;
     private float velocity;
     float rotation = 0;
@@ -22,17 +23,42 @@ public class PlayerControlRingVersion : MonoBehaviour
     float throwingSpeed = 20;
     SphereCollider triggerSphereRef;
     public GameObject charRing;
+    Animator walkAnimator;
+    int stickCheck = 1;
+    float yCamOffset = 0;
+    int requeiredKeys = 0;
+    Vector3 checkLastContact = Vector3.zero;
+    int numOfJumps;
+    public GameObject bigKeyRef;
 
+    public Rigidbody GetRBRing()
+    {
+        return ringRb;
+    }
+    public void SetStickVars(int setCheck, float setRot, int setKeys)
+    {
+        stickCheck = setCheck;
+        yCamOffset = setRot;
+        requeiredKeys = setKeys;
+    }
+    public void SetJumps(int n)
+    {
+        numOfJumps = n;
+    }
     private void Awake()
     {
         Application.targetFrameRate = 60;
         rb = this.GetComponent<Rigidbody>();
         cam = this.GetComponentInChildren<Camera>();
-        ringCasePos = ring.transform.parent.position;
+        ringCase.transform.localPosition = new Vector3(0, 1, 2);
+        ringCasePos = ringCase.transform.position;
+        ring.transform.position = ringCasePos;
+        //ringCasePos = ring.transform.parent.position;
         ringOGPos = ring.transform.localPosition;
         ringRb = ring.GetComponent<Rigidbody>();
         triggerSphereRef = GetComponent<SphereCollider>();
         ring.SetActive(false);
+        walkAnimator = GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -42,39 +68,43 @@ public class PlayerControlRingVersion : MonoBehaviour
 
     private void Update()
     {
-        PlayerInput();
-        Camera();
-
-        //if (throwing && ringThrown == false)
-        //{
-        //    Throw();
-        //    ringThrown = true;
-        //}
-        if (throwing)
+        if (GameObject.Find("PauseMenu") == null)
         {
-            if (ringThrown == false)
-            {
-                Throw();
-            }
-            //ringThrown = true;
-        }
-        //if (ringThrown && retrieving)
-        //{
-        //    Retrieve();
-        //    grabbing = true;
-        //    retrieving = false;
-        //}
+            PlayerInput();
+            Camera();
 
-        /*
-        else
-        {
-            if (throwingSpeed < 0)
-            {
-                throwingSpeed = 50;
-            }
-        }
-        */
+            rb.AddForce(Vector3.down * 5, ForceMode.Impulse);
 
+            //if (throwing && ringThrown == false)
+            //{
+            //    Throw();
+            //    ringThrown = true;
+            //}
+            if (throwing)
+            {
+                if (ringThrown == false)
+                {
+                    Throw();
+                }
+                //ringThrown = true;
+            }
+            //if (ringThrown && retrieving)
+            //{
+            //    Retrieve();
+            //    grabbing = true;
+            //    retrieving = false;
+            //}
+
+            /*
+            else
+            {
+                if (throwingSpeed < 0)
+                {
+                    throwingSpeed = 50;
+                }
+            }
+            */
+        }
     }
 
 
@@ -93,7 +123,18 @@ public class PlayerControlRingVersion : MonoBehaviour
             */
             normalVelocityX = Input.GetAxis("Horizontal") * transform.right;
             normalVelocityZ = Input.GetAxis("Vertical") * transform.forward;
-            speed = 5;
+            speed = 10;
+            if (!walkAnimator.GetBool("walkCheck"))
+            {
+                walkAnimator.SetBool("walkCheck", true);
+            }
+        }
+        else
+        {
+            if (walkAnimator.GetBool("walkCheck"))
+            {
+                walkAnimator.SetBool("walkCheck", false);
+            }
         }
         if (Input.GetAxis("Mouse X") != 0)
         {
@@ -102,11 +143,18 @@ public class PlayerControlRingVersion : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             throwing = true;
+            walkAnimator.SetTrigger("throwTrigger");
         }
         if (Input.GetMouseButton(1))
         {
             //retrieving = true;
             Retrieve();
+        }
+        if(Input.GetKeyDown(KeyCode.Space) && numOfJumps > 0)
+        {
+            walkAnimator.SetTrigger("jumpTrigger");
+            numOfJumps--;
+            rb.AddForce(Vector3.up * 300, ForceMode.Impulse);
         }
 
         desiredVelocity = (normalVelocityX + normalVelocityZ) * speed;
@@ -115,8 +163,8 @@ public class PlayerControlRingVersion : MonoBehaviour
 
     private void Move(Vector3 vel, float r)
     {
-        rb.velocity = vel;
-        rb.rotation = Quaternion.Euler(0, r, 0);
+        rb.velocity = vel * stickCheck;
+        rb.rotation = Quaternion.Euler(0, (r * stickCheck) + yCamOffset, 0);
     }
 
     private void Throw()
@@ -128,6 +176,14 @@ public class PlayerControlRingVersion : MonoBehaviour
         ringRb.velocity += cam.transform.forward.normalized * throwingSpeed;
         throwing = false;
         ringThrown = true;
+        if (GetComponent<KeyPickup>().GetKeys() >= 1)
+        {
+            bigKeyRef.SetActive(true);
+        }
+        else
+        {
+            bigKeyRef.SetActive(false);
+        }
         //StartCoroutine("throwingCoutdown");
     }
     private void Retrieve()
@@ -136,9 +192,31 @@ public class PlayerControlRingVersion : MonoBehaviour
         {
             triggerSphereRef.enabled = true;
         }
-        ringCasePos = ring.transform.parent.position;
+        ringCasePos = ringCase.transform.position;
+        //ringCasePos = ring.transform.parent.position;
         //ringRb.useGravity = false;
-        ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z) * throwingSpeed * Time.deltaTime;
+        if (GetComponent<KeyPickup>().GetKeys() >= 1)
+        {
+            if (GetComponent<KeyPickup>().GetKeys() - requeiredKeys >= 0)
+            {
+                if (ring.activeSelf == true && checkLastContact != GetComponentInChildren<StickRing>().GetPointOfCollision())
+                {
+                    this.transform.position += (GetComponentInChildren<StickRing>().GetPointOfCollision() - this.transform.position).normalized * throwingSpeed * Time.deltaTime;
+                    ring.transform.position = GetComponentInChildren<StickRing>().GetPointOfCollision();
+                    walkAnimator.SetBool("climbCheck", true);
+                }
+            }
+            else
+            {
+                ringRb.constraints = RigidbodyConstraints.None;
+                ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z) * (throwingSpeed / 5) * Time.deltaTime;
+            }
+        }
+        else
+        {
+            ringRb.constraints = RigidbodyConstraints.None;
+            ringRb.velocity += new Vector3(ringCasePos.x - ring.transform.position.x, ringCasePos.y - ring.transform.position.y, ringCasePos.z - ring.transform.position.z) * (throwingSpeed / 5) * Time.deltaTime;
+        }
     }
     private void Camera()
     {
@@ -148,6 +226,8 @@ public class PlayerControlRingVersion : MonoBehaviour
 
     private void GrabRing()
     {
+        walkAnimator.SetBool("climbCheck", false);
+        checkLastContact = GetComponentInChildren<StickRing>().GetPointOfCollision();
         ring.transform.localPosition = ringOGPos;
         ring.transform.eulerAngles = new Vector3(90, 0, 0);
         ringRb.isKinematic = true;
@@ -156,6 +236,10 @@ public class PlayerControlRingVersion : MonoBehaviour
         triggerSphereRef.enabled = false;
         charRing.SetActive(true);
         ring.SetActive(false);
+        ringRb.constraints = RigidbodyConstraints.None;
+        stickCheck = 1;
+        yCamOffset = 0;
+        //GetComponentInChildren<StickRing>().SetPointOfCollision(null);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -169,11 +253,14 @@ public class PlayerControlRingVersion : MonoBehaviour
         {
             GrabRing();
         }
-    }
 
-    IEnumerable throwingCoutdown()
-    {
-        yield return new WaitForSeconds(0.1f);
-        triggerSphereRef.enabled = true;
+        //if (other.tag == "climbing")
+        //{
+        //    if (ring.activeSelf == false)
+        //    {
+        //        rb.AddForce(Vector3.up * 300, ForceMode.Impulse);
+        //    }
+        //    rb.AddForce(cam.transform.forward * 200, ForceMode.Impulse);
+        //}
     }
 }

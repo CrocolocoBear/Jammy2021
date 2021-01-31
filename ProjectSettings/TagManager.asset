@@ -4,9 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - KeyBack
+  - wall
+  - climbing
   - KeyWorld
+  - KeyBack
   - RingThrow
+  - BigKey
   layers:
   - Default
   - TransparentFX

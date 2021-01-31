@@ -12,6 +12,9 @@ public class WorldKey : MonoBehaviour
             {
                 other.gameObject.GetComponent<KeyPickup>().Pickup(gameObject.name);
 
+                //GameObject.FindWithTag("Dialogue").GetComponent<TypewriterEffect>().PickText(gameObject.name);
+                //GameObject.FindWithTag("Dialogue").GetComponent<TypewriterEffect>().StartText();
+
                 Destroy(gameObject);
             }
         }
